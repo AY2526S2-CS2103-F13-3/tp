@@ -11,6 +11,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
+### Tan Yeong Teng Justin
+
+<img src="images/cyrpux.png" width="200px">
+
+[[github](http://github.com/cyprux)]
+[[portfolio](team/johndoe.md)]
+
+- Role: Developer
+- Responsibilities: UI
+
 ### Yap Shao Wen
 
 <img src="images/yapshaowen.png" width="200px">
@@ -37,22 +47,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Data Gooner
 
-### Jean Doe
+### Tan Min Zhe
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/TMinZhe.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/TMinZhe)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+- Role: Developer
+- Responsibilities: Dev Ops + Threading
 
-### Tan Yeong Teng Justin
-
-<img src="images/cyrpux.png" width="200px">
-
-[[github](http://github.com/cyprux)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: UI
