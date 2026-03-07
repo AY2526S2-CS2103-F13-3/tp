@@ -49,7 +49,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Tan Min Zhe
 
-<img src="images/TMinZhe.png" width="200px">
+<img src="images/tminzhe.png" width="200px">
 
 [[github](http://github.com/TMinZhe)]
 [[portfolio](team/johndoe.md)]
