@@ -1,11 +1,11 @@
 package seedu.address.model.task;
 
-import seedu.address.Main;
-
-import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a list of maintenance tasks.
+ */
 public class MaintenanceTaskList {
     private final ArrayList<MaintenanceTask> tasks = new ArrayList<>();
 
