@@ -14,6 +14,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Service;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -120,5 +121,17 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String service} into a {@code service}.
+     */
+    public static Service parseService(String service) throws ParseException {
+        requireNonNull(service);
+        String trimmedService = service.trim();
+        if (!Service.isValidService(trimmedService)) {
+            throw new ParseException(Service.MESSAGE_CONSTRAINTS);
+        }
+        return new Service(trimmedService);
     }
 }
