@@ -21,11 +21,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -101,7 +97,10 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Service updatedService = editPersonDescriptor.getService();
+
+        //Service service =
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedService);
     }
 
     @Override
@@ -139,6 +138,8 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
 
+        private Service service;
+
         public EditPersonDescriptor() {}
 
         /**
@@ -151,6 +152,8 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+
+            setService(toCopy.service);
         }
 
         /**
@@ -191,6 +194,15 @@ public class EditCommand extends Command {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
+
+        public Service getService() {
+            return service;
+        }
+
+        public void setService(Service service) {
+            this.service = service;
+        }
+
 
         /**
          * Sets {@code tags} to this object's {@code tags}.

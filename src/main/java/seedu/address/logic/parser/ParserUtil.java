@@ -9,10 +9,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -120,5 +117,15 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    public static Service parseService(String service) throws  ParseException {
+        requireNonNull(service);
+        String trimmedService = service.trim();
+        if (!Email.isValidEmail(trimmedService)) {
+            throw new ParseException(Service.MESSAGE_CONSTRAINTS);
+        }
+        return new Service(trimmedService);
+
     }
 }
