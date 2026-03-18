@@ -23,6 +23,7 @@ public class ListtCommand extends Command {
             return new CommandResult(MESSAGE_NO_TASKS);
         }
         StringBuilder sb = new StringBuilder(MESSAGE_SUCCESS + "\n");
+
         List<MaintenanceTask> tasks = taskList.getTasks();
         for (int i = 0; i < tasks.size(); i++) {
             MaintenanceTask task = tasks.get(i);
