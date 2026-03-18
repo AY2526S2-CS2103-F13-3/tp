@@ -51,6 +51,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+        service = personToCopy.getService();
     }
 
     /**
@@ -93,6 +94,13 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Service} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withService(String service) {
+        this.service = new Service(service);
+        return this;
+    }
 
 
     public Person build() {

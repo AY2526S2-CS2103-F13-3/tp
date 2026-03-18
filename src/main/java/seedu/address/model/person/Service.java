@@ -11,6 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Service {
     public static final String MESSAGE_CONSTRAINTS = "Service should be alphanumeric";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String DEFAULT_SERVICE = "Plumber";
 
     public final String service;
 

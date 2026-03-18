@@ -106,10 +106,11 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        if (!Service.isValidService(service)) {
+        String serviceToUse = service == null ? Service.DEFAULT_SERVICE : service;
+        if (!Service.isValidService(serviceToUse)) {
             throw new IllegalValueException(Service.MESSAGE_CONSTRAINTS);
         }
-        final Service modelService = new Service(service);
+        final Service modelService = new Service(serviceToUse);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelService);
