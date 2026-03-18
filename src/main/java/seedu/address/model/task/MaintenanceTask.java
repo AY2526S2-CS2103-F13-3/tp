@@ -1,11 +1,11 @@
 package seedu.address.model.task;
 
-import seedu.address.model.tag.Tag;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a maintenance task in the task list.
@@ -64,4 +64,3 @@ public class MaintenanceTask {
                 + " (Contractor #" + contractorIndex + " [" + tagsString + "])";
     }
 }
-
