@@ -129,7 +129,7 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code service} is invalid.
      */
-    public static Service parseService(String service) throws  ParseException {
+    public static Service parseService(String service) throws ParseException {
         requireNonNull(service);
         String trimmedService = service.trim();
         if (!Service.isValidService(trimmedService)) {
