@@ -325,7 +325,7 @@ The `addt` command works as follows:
 * need to track maintenance contacts and service providers
 * can type fast and prefer keyboard interaction
 
-**Value proposition**: 
+**Value proposition**:
 helps estate managers organise contractor contract details in a searchable desktop
 system, allowing them to retrieve and update contact information fast.
 
