@@ -26,7 +26,7 @@ public class ReportCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_MONTH + "2026-12";
 
-    public static final String MESSAGE_NO_TASKS = "No maintenance tasks found for %1$s.";
+    public static final String MESSAGE_NO_TASKS = "No completed maintenance tasks found for %1$s.";
     public static final String MESSAGE_SUCCESS = "Report for %1$s:\nTotal tasks: %2$d\n\nTasks by contractor:\n";
 
     private final YearMonth yearMonth;
@@ -48,6 +48,7 @@ public class ReportCommand extends Command {
         // Filter tasks by the specified month
         List<MaintenanceTask> filteredTasks = allTasks.stream()
                 .filter(task -> YearMonth.from(task.getDate()).equals(yearMonth))
+                .filter(task -> task.isCompleted())
                 .collect(Collectors.toList());
 
         if (filteredTasks.isEmpty()) {
