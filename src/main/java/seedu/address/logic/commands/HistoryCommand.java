@@ -1,3 +1,9 @@
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import seedu.address.model.Model;
+import seedu.address.model.task.FacilityContainsKeywords;
+
 public class HistoryCommand extends Command {
     public static final String COMMAND_WORD = "history";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all tasks for a facility. "
