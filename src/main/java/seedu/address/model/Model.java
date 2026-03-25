@@ -91,6 +91,8 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    ObservableList<MaintenanceTask> getFilteredMaintenanceTaskList();
+
     void updateFilteredMaintenanceTaskList(Predicate<MaintenanceTask> predicate);
 
     MaintenanceTaskList getMaintenanceTaskList();
