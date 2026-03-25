@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.person.Person;
+import seedu.address.model.task.MaintenanceTask;
 import seedu.address.model.task.MaintenanceTaskList;
 
 /**
@@ -54,7 +55,8 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in
+     * the address book.
      */
     boolean hasPerson(Person person);
 
@@ -73,7 +75,8 @@ public interface Model {
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another
+     * existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
 
@@ -81,11 +84,15 @@ public interface Model {
     ObservableList<Person> getFilteredPersonList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered person list to filter by the given
+     * {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    ObservableList<MaintenanceTask> getFilteredMaintenanceTaskList();
+
+    void updateFilteredMaintenanceTaskList(Predicate<MaintenanceTask> predicate);
     /**
      * Sorts the maintainence tasks by date.
      */

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * Represents a list of maintenance tasks.
  */
@@ -38,7 +41,8 @@ public class MaintenanceTaskList {
     }
 
     /**
-     * Returns true if a task with the same facility and date already exists in the list.
+     * Returns true if a task with the same facility and date already exists in the
+     * list.
      *
      * @param facility The facility name to check.
      * @param date     The date to check.
@@ -51,6 +55,12 @@ public class MaintenanceTaskList {
     }
 
     /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<MaintenanceTask> asUnmodifiableObservableList() {
+        return FXCollections.unmodifiableObservableList(FXCollections.observableList(tasks));
+    }
+  
      * Sorts tasks in-place by date (ascending). Ties are broken deterministically to ensure a stable order.
      */
     public void sortTasksByDate() {
