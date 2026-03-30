@@ -123,6 +123,8 @@
         "listing-all-tasks-listt": "Listing all tasks : listt",
         "sorting-tasks-by-date-sortt": "Sorting tasks by date : sortt",
         "deleting-a-task-delt": "Deleting a task : delt",
+        "marking-a-task-as-complete-donet": "Marking a task as complete : donet",
+        "generating-a-monthly-report-report": "Generating a monthly report : report",
         "general-features": "General features",
         "viewing-help-help": "Viewing help : help",
         "clearing-all-entries-clear": "Clearing all entries : clear",
