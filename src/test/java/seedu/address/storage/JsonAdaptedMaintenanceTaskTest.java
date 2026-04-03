@@ -1,6 +1,8 @@
 package seedu.address.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.storage.JsonAdaptedMaintenanceTask.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalMaintenanceTasks.SPORTS_HALL;
@@ -32,7 +34,7 @@ public class JsonAdaptedMaintenanceTaskTest {
     @Test
     public void toModelType_nullFacility_throwsIllegalValueException() {
         JsonAdaptedMaintenanceTask task = new JsonAdaptedMaintenanceTask(
-                null, VALID_DATE, VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE);
+                null, VALID_DATE, VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE, false);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "facility");
         assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -40,7 +42,7 @@ public class JsonAdaptedMaintenanceTaskTest {
     @Test
     public void toModelType_nullDate_throwsIllegalValueException() {
         JsonAdaptedMaintenanceTask task = new JsonAdaptedMaintenanceTask(
-                VALID_FACILITY, null, VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE);
+                VALID_FACILITY, null, VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE, false);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, "date");
         assertThrows(IllegalValueException.class, expectedMessage, task::toModelType);
     }
@@ -48,7 +50,7 @@ public class JsonAdaptedMaintenanceTaskTest {
     @Test
     public void toModelType_invalidDate_throwsIllegalValueException() {
         JsonAdaptedMaintenanceTask task = new JsonAdaptedMaintenanceTask(
-                VALID_FACILITY, "not-a-date", VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE);
+                VALID_FACILITY, "not-a-date", VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE, false);
         assertThrows(IllegalValueException.class, task::toModelType);
     }
 
@@ -56,7 +58,7 @@ public class JsonAdaptedMaintenanceTaskTest {
     public void toModelType_invalidTag_throwsIllegalValueException() {
         List<JsonAdaptedTag> invalidTags = List.of(new JsonAdaptedTag("#invalid"));
         JsonAdaptedMaintenanceTask task = new JsonAdaptedMaintenanceTask(
-                VALID_FACILITY, VALID_DATE, VALID_CONTRACTOR_INDEX, invalidTags, VALID_SERVICE);
+                VALID_FACILITY, VALID_DATE, VALID_CONTRACTOR_INDEX, invalidTags, VALID_SERVICE, false);
         assertThrows(IllegalValueException.class, task::toModelType);
     }
 
@@ -72,5 +74,22 @@ public class JsonAdaptedMaintenanceTaskTest {
     @Test
     public void toModelType_roundTrip_success() throws Exception {
         assertRoundTrip(SPORTS_HALL);
+    }
+
+    @Test
+    public void toModelType_completedStatePresent_isPreserved() throws Exception {
+        MaintenanceTask completedTask = new MaintenanceTask(
+                VALID_FACILITY, SPORTS_HALL.getDate(), VALID_CONTRACTOR_INDEX,
+                SPORTS_HALL.getTags(), SPORTS_HALL.getContractorService(), true);
+
+        JsonAdaptedMaintenanceTask adapted = new JsonAdaptedMaintenanceTask(completedTask);
+        assertTrue(adapted.toModelType().isCompleted());
+    }
+
+    @Test
+    public void toModelType_completedStateMissing_defaultsToIncomplete() throws Exception {
+        JsonAdaptedMaintenanceTask task = new JsonAdaptedMaintenanceTask(
+                VALID_FACILITY, VALID_DATE, VALID_CONTRACTOR_INDEX, VALID_TAGS, VALID_SERVICE, null);
+        assertFalse(task.toModelType().isCompleted());
     }
 }

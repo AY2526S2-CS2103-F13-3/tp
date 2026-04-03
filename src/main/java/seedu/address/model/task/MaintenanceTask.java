@@ -25,7 +25,7 @@ public class MaintenanceTask {
 
 
     /**
-     * Constructs a {@code MaintenanceTask}.
+     * Constructs a default {@code MaintenanceTask} where isCompleted = false.
      *
      * @param facility        The name of the facility (1–50 chars).
      * @param date            The scheduled date (must not be in the past).
@@ -33,6 +33,21 @@ public class MaintenanceTask {
      * @param tags            The set of tags associated with the task.
      */
     public MaintenanceTask(String facility, LocalDate date, int contractorIndex, Set<Tag> tags, Service service) {
+        this(facility, date, contractorIndex, tags, service, false);
+    }
+
+    /**
+     * Constructs a {@code MaintenanceTask} with explicit completion state.
+     *
+     * @param facility        The name of the facility (1–50 chars).
+     * @param date            The scheduled date (must not be in the past).
+     * @param contractorIndex The 1-based index of the assigned contractor.
+     * @param tags            The set of tags associated with the task.
+     * @param service         The contractor service assigned to this task.
+     * @param isCompleted     Whether this task has been completed.
+     */
+    public MaintenanceTask(String facility, LocalDate date, int contractorIndex, Set<Tag> tags, Service service,
+                           boolean isCompleted) {
         assert facility != null : "Facility should not be null";
         assert !facility.isBlank() : "Facility should not be blank";
         assert date != null : "Date should not be null";
@@ -44,7 +59,7 @@ public class MaintenanceTask {
         this.contractorIndex = contractorIndex;
         this.tags.addAll(tags);
         this.contractorService = service;
-        this.isCompleted = false;
+        this.isCompleted = isCompleted;
     }
 
     /**

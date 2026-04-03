@@ -27,6 +27,7 @@ class JsonAdaptedMaintenanceTask {
     private final int contractorIndex;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String service;
+    private final Boolean isCompleted;
 
     /**
      * Constructs a {@code JsonAdaptedMaintenanceTask} with the given task details.
@@ -37,11 +38,13 @@ class JsonAdaptedMaintenanceTask {
             @JsonProperty("date") String date,
             @JsonProperty("contractorIndex") int contractorIndex,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("service") String service) {
+            @JsonProperty("service") String service,
+            @JsonProperty("isCompleted") Boolean isCompleted) {
         this.facility = facility;
         this.date = date;
         this.contractorIndex = contractorIndex;
         this.service = service;
+        this.isCompleted = isCompleted;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -57,6 +60,7 @@ class JsonAdaptedMaintenanceTask {
         this.date = source.getDate().toString();
         this.contractorIndex = source.getContractorIndex();
         this.service = source.getContractorService().toString();
+        this.isCompleted = source.isCompleted();
         this.tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -76,7 +80,9 @@ class JsonAdaptedMaintenanceTask {
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, "service"));
         }
         final Service modelService = new Service(service);
-        return new MaintenanceTask(modelFacility, modelDate, contractorIndex, modelTags, modelService);
+        final boolean modelIsCompleted = isCompleted != null && isCompleted;
+        return new MaintenanceTask(modelFacility, modelDate, contractorIndex, modelTags,
+                modelService, modelIsCompleted);
     }
 
     /**
