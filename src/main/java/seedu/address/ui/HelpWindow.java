@@ -33,6 +33,7 @@ public class HelpWindow extends UiPart<Stage> {
             - addt f/FACILITY d/YYYY-MM-DD c/CONTRACTOR_INDEX
             - listt
             - sortt
+            - editt INDEX [f/FACILITY] [d/YYYY-MM-DD] [c/CONTRACTOR_INDEX]
             - donet INDEX
             - delt INDEX
             - history f/FACILITY
