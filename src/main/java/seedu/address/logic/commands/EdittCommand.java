@@ -28,7 +28,7 @@ public class EdittCommand extends Command {
     public static final String COMMAND_WORD = "editt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the maintenance task identified "
-            + "by the index number used in the displayed task list."
+            + "by the index number used in the displayed task list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[f/FACILITY] "
@@ -150,7 +150,8 @@ public class EdittCommand extends Command {
     /**
      * Returns true if a task with the same facility and date exists, excluding the edited task itself.
      */
-    private static boolean isDuplicateTask(List<MaintenanceTask> taskList, MaintenanceTask candidate, int excludedIndex) {
+    private static boolean isDuplicateTask(List<MaintenanceTask> taskList, MaintenanceTask candidate,
+                                           int excludedIndex) {
         for (int i = 0; i < taskList.size(); i++) {
             if (i == excludedIndex) {
                 continue;

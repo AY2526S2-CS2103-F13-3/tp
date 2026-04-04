@@ -68,7 +68,8 @@ public class EdittCommandParser implements Parser<EdittCommand> {
 
         if (argMultimap.getValue(PREFIX_CONTRACTOR_INDEX).isPresent()) {
             try {
-                descriptor.setContractorIndex(ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTRACTOR_INDEX).get()));
+                descriptor.setContractorIndex(ParserUtil.parseIndex(
+                        argMultimap.getValue(PREFIX_CONTRACTOR_INDEX).get()));
             } catch (ParseException e) {
                 throw new ParseException("Contractor index must be a positive integer.");
             }
