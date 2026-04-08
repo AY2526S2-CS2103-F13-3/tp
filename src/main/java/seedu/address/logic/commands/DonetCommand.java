@@ -65,19 +65,15 @@ public class DonetCommand extends Command {
 
         // Build display string
         List<Person> allPersons = model.getAddressBook().getPersonList();
-        int contractorIdx = taskToComplete.getContractorIndex() - 1;
-        if (contractorIdx < 0 || contractorIdx >= allPersons.size()) {
-            throw new CommandException("Contractor linked to this task no longer exists.");
-        }
-        Person contractor = allPersons.get(contractorIdx);
+        String contractorNameStr = taskToComplete.getContractorName() != null
+            ? taskToComplete.getContractorName().fullName : "Unknown (deleted)";
         String tagsString = taskToComplete.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.joining(", "));
         String taskDisplay = taskToComplete.getFacility() + " on " + taskToComplete.getDate()
-                + " (Contractor: " + contractor.getName().fullName
+                + " (Contractor: " + contractorNameStr
                 + " | Service: " + taskToComplete.getContractorService()
                 + " | Tags: [" + tagsString + "])";
-
         return new CommandResult(String.format(MESSAGE_SUCCESS, taskDisplay));
     }
 
