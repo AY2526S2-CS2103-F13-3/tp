@@ -31,23 +31,11 @@ public class ListtCommand extends Command {
 
         for (int i = 0; i < tasks.size(); i++) {
             MaintenanceTask task = tasks.get(i);
-            int contractorIdx = task.getContractorIndex() - 1;
-            String contractorName;
-            String tagsString;
-            String service;
-
-            if (contractorIdx >= 0 && contractorIdx < allPersons.size()) {
-                Person contractor = allPersons.get(contractorIdx);
-                contractorName = contractor.getName().fullName;
-                service = contractor.getService().toString();
-                tagsString = task.getTags().stream()
-                        .map(tag -> tag.tagName)
-                        .collect(java.util.stream.Collectors.joining(", "));
-            } else {
-                contractorName = "Unknown (deleted)";
-                service = "Unknown";
-                tagsString = "";
-            }
+            String contractorName = task.getContractorName() != null ? task.getContractorName().fullName : "Unknown";
+            String service = task.getContractorService() != null ? task.getContractorService().toString() : "Unknown";
+            String tagsString = task.getTags().stream()
+                    .map(tag -> tag.tagName)
+                    .collect(java.util.stream.Collectors.joining(", "));
 
             sb.append(i + 1).append(". ")
                     .append(task.isCompleted() ? "[DONE] " : "[PENDING] ")
@@ -60,4 +48,3 @@ public class ListtCommand extends Command {
         return new CommandResult(sb.toString());
     }
 }
-

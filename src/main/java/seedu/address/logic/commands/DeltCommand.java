@@ -9,7 +9,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 import seedu.address.model.task.MaintenanceTask;
 
 /**
@@ -49,11 +48,8 @@ public class DeltCommand extends Command {
                     "Cannot delete a completed task. Completed tasks are kept for reporting.");
         }
 
-        List<Person> allPersons = model.getAddressBook().getPersonList();
-        int contractorIdx = taskToDelete.getContractorIndex() - 1;
-        String contractorName = (contractorIdx >= 0 && contractorIdx < allPersons.size())
-                ? allPersons.get(contractorIdx).getName().fullName
-                : "Unknown (deleted)";
+        String contractorNameStr = taskToDelete.getContractorName() != null
+            ? taskToDelete.getContractorName().fullName : "Unknown (deleted)";
 
         model.getMaintenanceTaskList().removeTask(taskToDelete);
 
@@ -61,7 +57,7 @@ public class DeltCommand extends Command {
                 .map(tag -> tag.tagName)
                 .collect(java.util.stream.Collectors.joining(", "));
         String taskDisplay = taskToDelete.getFacility() + " on " + taskToDelete.getDate()
-                + " (Contractor: " + contractorName
+                + " (Contractor: " + contractorNameStr
                 + " | Service: " + taskToDelete.getContractorService()
                 + " | Tags: [" + tagsString + "])";
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskDisplay));

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Service;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.MaintenanceTask;
@@ -24,7 +25,8 @@ class JsonAdaptedMaintenanceTask {
 
     private final String facility;
     private final String date;
-    private final int contractorIndex;
+    //private final int contractorIndex;
+    private final String contractorName;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String service;
     private final boolean isCompleted;
@@ -36,13 +38,13 @@ class JsonAdaptedMaintenanceTask {
     public JsonAdaptedMaintenanceTask(
             @JsonProperty("facility") String facility,
             @JsonProperty("date") String date,
-            @JsonProperty("contractorIndex") int contractorIndex,
+            @JsonProperty("contractorName") String contractorName,
             @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("service") String service,
             @JsonProperty("isCompleted") boolean isCompleted) {
         this.facility = facility;
         this.date = date;
-        this.contractorIndex = contractorIndex;
+        this.contractorName = contractorName;
         this.service = service;
         this.isCompleted = isCompleted;
         if (tags != null) {
@@ -53,10 +55,10 @@ class JsonAdaptedMaintenanceTask {
     public JsonAdaptedMaintenanceTask(
             String facility,
             String date,
-            int contractorIndex,
+            String contractorName,
             List<JsonAdaptedTag> tags,
             String service) {
-        this(facility, date, contractorIndex, tags, service, false);
+        this(facility, date, contractorName, tags, service, false);
     }
 
     /**
@@ -67,7 +69,7 @@ class JsonAdaptedMaintenanceTask {
     public JsonAdaptedMaintenanceTask(MaintenanceTask source) {
         this.facility = source.getFacility();
         this.date = source.getDate().toString();
-        this.contractorIndex = source.getContractorIndex();
+        this.contractorName = source.getContractorName() != null ? source.getContractorName().fullName : null;
         this.service = source.getContractorService().toString();
         this.isCompleted = source.isCompleted();
         this.tags.addAll(source.getTags().stream()
@@ -84,12 +86,20 @@ class JsonAdaptedMaintenanceTask {
         final String modelFacility = parseFacility();
         final LocalDate modelDate = parseDate();
         final Set<Tag> modelTags = parseTags();
+        if (contractorName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "contractorName"));
+        }
+        if (!Name.isValidName(contractorName)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        }
+        final Name modelContractorName = new Name(contractorName);
         if (service == null) {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, "service"));
         }
         final Service modelService = new Service(service);
-        MaintenanceTask task = new MaintenanceTask(modelFacility, modelDate, contractorIndex, modelTags, modelService);
+        MaintenanceTask task = new MaintenanceTask(modelFacility, modelDate,
+                modelContractorName, modelTags, modelService);
         if (isCompleted) {
             task.markAsCompleted();
         }

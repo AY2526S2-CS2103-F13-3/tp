@@ -82,6 +82,6 @@ public class MaintenanceTaskList {
         tasks.sort(Comparator
                 .comparing(MaintenanceTask::getDate)
                 .thenComparing(MaintenanceTask::getFacility, String.CASE_INSENSITIVE_ORDER)
-                .thenComparingInt(MaintenanceTask::getContractorIndex));
+                .thenComparing(t -> t.getContractorName().fullName, String.CASE_INSENSITIVE_ORDER));
     }
 }
