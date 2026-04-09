@@ -13,7 +13,15 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project is adapted from [AddressBook-Level3](https://se-education.org/addressbook-level3/) by the [SE-EDU initiative](https://se-education.org).
+
+EstateContacts relies on the following third-party libraries/frameworks:
+
+* [JavaFX](https://openjfx.io/) for the GUI.
+* [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization.
+* [JUnit 5](https://junit.org/junit5/) for automated testing.
+
+The team also used GitHub Copilot for IDE-assisted autocomplete during development.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -334,17 +342,21 @@ system, allowing them to retrieve and update contact information fast.
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                     | So that I can…​                                     |
-|----------|---------|----------------------------------|-----------------------------------------------------|
-| `* * *`  | user    | view a list of contractors       | browse available vendors                            |
-| `* * *`  | user    | add contractor contact details   | store essential contacts in one place               |
-| `* * *`  | user    | search contractors by name       | find a contractor quickly                           |
-| `* * *`  | user    | add a maintanence task           | track scheduled work                                |
-| `* * *`  | user    | delete contractor records        | remove outdated or incorrect contacts               |
-| `* * *`  | user    | delete a maintanence task        | remove tasks that are no longer required            |
-| `* * *`  | user    | view a list of maintanence tasks | view all ongoing maintanenec issues in the estate   |
-| `* *`    | user    | add remarks to contacts          | record notes about contractors or service providers |
-| `* *`    | user    | tag contractors by service type  | organise contacts                                   |
+| Priority | As a …​ | I want to …​                          | So that I can…​                                     |
+|----------|---------|---------------------------------------|-----------------------------------------------------|
+| `* * *`  | user    | view a list of contractors            | browse available vendors                            |
+| `* * *`  | user    | add contractor contact details        | store essential contacts in one place               |
+| `* * *`  | user    | search contractors by name or service | find a contractor quickly                           |
+| `* * *`  | user    | add a maintanence task                | track scheduled work                                |
+| `* * *`  | user    | delete contractor records             | remove outdated or incorrect contacts               |
+| `* * *`  | user    | delete a maintanence task             | remove tasks that are no longer required            |
+| `* * *`  | user    | view a list of maintanence tasks      | view all ongoing maintanenec issues in the estate   |
+| `* * *`  | user    | mark a maintenance task as complete   | track which tasks have been finished                |
+| `* * *`  | user    | generate a monthly maintenance report | review completed work for the month                 |
+| `* *`    | user    | sort maintenance tasks by date        | see upcoming tasks in chronological order           |
+| `* *`    | user    | tag contractors by service type       | organise contacts by specialty                      |
+| `* *`    | user    | add remarks to contacts               | record notes about contractors or service providers |
+| `* *`    | user    | edit contractor details               | keep contact information up to date                 |
 
 *{More to be added}*
 
@@ -422,17 +434,15 @@ testers are expected to do more *exploratory* testing.
 ### Launch and shutdown
 
 1. Initial launch
-
-   1. Download the jar file and copy into an empty folder
-
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Download the JAR file and copy into an empty folder.
+    1. Open a terminal, navigate to the folder, and run `java -jar addressbook.jar`.
+    1. Expected: GUI appears with sample data.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
-
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+    1. Resize the window and move it to a different location. Close the window.
+    1. Re-launch the app.
+    1. Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
 
@@ -451,12 +461,65 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Managing contractors
+
+1. **Adding a contractor**
+    1. Test case: `addc n/John Doe p/98765432 e/johnd@example.com a/123 Street s/Plumbing`
+    1. Expected: Contractor added successfully with all details shown.
+
+1. **Finding a contractor**
+    1. Test case: `findc n/John`
+    1. Expected: All contractors with "John" in their name are shown.
+    1. Test case: `findc s/Plumbing`
+    1. Expected: All contractors with "Plumbing" as their service are shown.
+
+1. **Deleting a contractor**
+    1. Prerequisites: Run `listc` to see all contractors.
+    1. Test case: `delc 1`
+    1. Expected: First contractor deleted. Associated tasks show `Unknown (deleted)`.
+    1. Test case: `delc 0`
+    1. Expected: Error message shown. No contractor deleted.
+
+### Managing maintenance tasks
+
+1. **Adding a task**
+    1. Prerequisites: Run `listc` to confirm contractor indices.
+    1. Test case: `addt f/Sports Hall d/2026-12-01 c/1`
+    1. Expected: Task added with contractor name, service and tags shown.
+    1. Test case: `addt f/Sports Hall d/2026-12-01 c/1` (duplicate)
+    1. Expected: Error about duplicate task.
+
+1. **Listing tasks**
+    1. Test case: `listt`
+    1. Expected: All tasks shown with `[PENDING]` or `[DONE]` status.
+
+1. **Marking a task as complete**
+    1. Prerequisites: Add a task first.
+    1. Test case: `donet 1`
+    1. Expected: Task marked as `[DONE]`.
+    1. Test case: `donet 1` again
+    1. Expected: Error saying task already completed.
+
+1. **Deleting a task**
+    1. Test case: `delt 1` on a `[PENDING]` task
+    1. Expected: Task deleted successfully.
+    1. Test case: `delt 1` on a `[DONE]` task
+    1. Expected: Error saying completed tasks cannot be deleted.
+
+1. **Generating a report**
+    1. Prerequisites: Add tasks, mark some as complete.
+    1. Test case: `report m/2026-12`
+    1. Expected: Report shows completed tasks grouped by contractor.
+    1. Test case: `report m/2025-01` (no tasks)
+    1. Expected: No completed tasks found message.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. **Missing data file**
+    1. Delete `data/addressbook.json` and restart the app.
+    1. Expected: App starts with sample data.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+1. **Corrupted data file**
+    1. Open `data/addressbook.json` and add invalid text.
+    1. Restart the app.
+    1. Expected: App starts with an empty data file.
