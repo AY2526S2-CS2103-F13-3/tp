@@ -273,11 +273,11 @@ Examples:
 
 ---
 
-### Viewing help : `help`
+### Viewing help : `help or f1 keyboard shortcut`
 
 Shows a message explaining how to access the help page.
 
-![help message](images/helpMessage.png)
+![help message](images/helpCommand.png)
 
 Format: `help`
 
@@ -311,9 +311,6 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
