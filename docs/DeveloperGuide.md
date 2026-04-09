@@ -270,13 +270,9 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
 ### Maintenance Task Feature
 
-The maintenance task feature allows estate managers to add, list, and delete maintenance tasks via the `addt`, `listt`, and `delt` commands.
+The maintenance task feature allows estate managers to add, list, and delete maintenance tasks via the `addt`, `listt`, `editt` and `delt` commands.
 
 #### Implementation
 
@@ -347,18 +343,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user    | view a list of contractors            | browse available vendors                            |
 | `* * *`  | user    | add contractor contact details        | store essential contacts in one place               |
 | `* * *`  | user    | search contractors by name or service | find a contractor quickly                           |
-| `* * *`  | user    | add a maintanence task                | track scheduled work                                |
 | `* * *`  | user    | delete contractor records             | remove outdated or incorrect contacts               |
-| `* * *`  | user    | delete a maintanence task             | remove tasks that are no longer required            |
-| `* * *`  | user    | view a list of maintanence tasks      | view all ongoing maintanenec issues in the estate   |
+| `* * *`  | user    | add a maintenance task                | track scheduled work                                |
+| `* * *`  | user    | delete a maintenance task             | remove tasks that are no longer required            |
+| `* * *`  | user    | view a list of maintenance tasks      | view all ongoing maintenance issues in the estate   |
 | `* * *`  | user    | mark a maintenance task as complete   | track which tasks have been finished                |
 | `* * *`  | user    | generate a monthly maintenance report | review completed work for the month                 |
 | `* *`    | user    | sort maintenance tasks by date        | see upcoming tasks in chronological order           |
 | `* *`    | user    | tag contractors by service type       | organise contacts by specialty                      |
-| `* *`    | user    | add remarks to contacts               | record notes about contractors or service providers |
 | `* *`    | user    | edit contractor details               | keep contact information up to date                 |
+| `* *`    | user    | edit maintenance task details               | keep task up to date                 |
 
-*{More to be added}*
+
 
 ### Use cases
 
@@ -403,15 +399,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   Use case ends.
 
 
-*{More to be added}*
-
 ### Non-Functional Requirements
 
 1. The system should work on any mainstream OS with Java 17 installed.
 2. The system should be able to store at least 1000 contacts without noticeable performance degradation.
 3. The system should respond to user commands within 1 second under normal usage conditions.
 
-*{More to be added}*
 
 ### Glossary
 
@@ -444,22 +437,6 @@ testers are expected to do more *exploratory* testing.
     1. Re-launch the app.
     1. Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
-### Deleting a person
-
-1. Deleting a person while all persons are being shown
-
-    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-    1. Test case: `delete 1`<br>
-       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-    1. Test case: `delete 0`<br>
-       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-       Expected: Similar to previous.
 
 ### Managing contractors
 
