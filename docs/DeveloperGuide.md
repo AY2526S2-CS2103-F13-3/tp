@@ -506,6 +506,12 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `delt 1` on a `[DONE]` task
     1. Expected: Error saying completed tasks cannot be deleted.
 
+1. **View Facility Task**
+    1. Test case: `history f/Sports Hall`
+    1. Expected: List showing all the maintenance history on the specific facility.
+    1. Test case: `history f/Gym` (on facility)
+    1. Expected: Error saying no maintenance history found message.
+
 1. **Generating a report**
     1. Prerequisites: Add tasks, mark some as complete.
     1. Test case: `report m/2026-12`
