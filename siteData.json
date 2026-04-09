@@ -64,6 +64,8 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-person": "Deleting a person",
+        "managing-contractors": "Managing contractors",
+        "managing-maintenance-tasks": "Managing maintenance tasks",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
