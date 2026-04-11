@@ -80,14 +80,14 @@ Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
-* Emails should be of the format local-part@domain
-* The local-part should only contain alphanumeric characters and (+ _ . -) excluding the paranthesis
-* The local-part may not start or end with any special characters
-* The local-part should be followed by a '@' and then a domain
-* The domain is made up of domain labels separated by periods
-* The domain must end with a domain label at least 2 characters long
-* Each domain label must start and end with alphanumeric characters
-* Each domain label must consist of alphanumeric characters separated only by hyphens (if any)
+Contractor field constraints:
+* `NAME`: Must contain only alphanumeric characters and spaces, and must not be blank.
+* `PHONE_NUMBER`: Must contain only digits, with length between 3 and 15 digits.
+* `EMAIL`: Must be in the format `local-part@domain`.
+  * `local-part`: Must use alphanumeric characters and `+_.-`, cannot start/end with a special character.
+  * `domain`: Domain labels are separated by `.`; each label must start/end alphanumeric, may contain internal hyphens, and final label must be at least 2 characters.* `ADDRESS`: Can contain any characters, but must not be blank.
+* `SERVICE`: Must be alphanumeric (no spaces/special characters).
+* `TAG`: Must be alphanumeric (no spaces/special characters).
 
 <box type="tip" seamless>
 
@@ -156,6 +156,7 @@ Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG
 * At least one field must be provided.
 * The index refers to the index number shown in the displayed contractor list.
 * The index **must be a positive integer** 1, 2, 3
+* Any edited contractor field must satisfy the same field constraints listed under `addc`.
 
 Example:
 * `editc 1 p/91234567 e/johndoe@example.com`
@@ -170,11 +171,10 @@ Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
-* `FACILITY` must be between 1 and 50 characters.
-* `DATE` must be in `YYYY-MM-DD` format and must not be in the past.
-* `CONTRACTOR_INDEX` refers to the index number shown in the **currently displayed contractor list**.
-* The index **must be a positive integer** 1, 2, 3
-* The date must be in YYYY-MM-DD format.
+Task field constraints:
+* `FACILITY`: Must be between 1 and 50 characters (after trimming).
+* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must not be in the past.
+* `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
 
 <box type="warning" seamless>
 
@@ -206,7 +206,7 @@ Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 * At least one field must be provided.
 * The index refers to the index number shown in the displayed maintenance tasklist.
 * The index **must be a positive integer** 1, 2, 3
-* The date must be in YYYY-MM-DD format.
+* Any edited task field must satisfy the same field constraints listed under `addt`.
 
 Caution: Refer to `addt` caution section.
 
