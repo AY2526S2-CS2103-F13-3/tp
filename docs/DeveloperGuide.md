@@ -380,7 +380,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   Use case resumes at step 2.
 
 
--**Use case: List maintenance tasks**
+**Use case: List maintenance tasks**
 
 **MSS**
 
@@ -394,16 +394,249 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. There are no maintenance tasks found.
 
-    * 3a1. EstateContacts informs the user that no tasks exist.
+    * 2a1. EstateContacts informs the user that no tasks exist.
+
+  Use case ends.
+
+
+**Use case: List contractor contacts**
+
+**MSS**
+
+1. User requests to list all contractor contacts.
+2. EstateContacts retrieves all stored contractor contacts.
+3. EstateContacts displays the contractor list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. There are no contractor contacts found.
+
+    * 2a1. EstateContacts informs the user that no contractor contacts exist.
+
+  Use case ends.
+
+
+**Use case: Delete a contractor contact**
+
+**MSS**
+
+1. User requests to list all contractor contacts.
+2. EstateContacts displays contractor contacts with indices.
+3. User requests to delete a contractor using an index.
+4. EstateContacts deletes the selected contractor contact.
+5. EstateContacts updates related maintenance tasks to show contractor as deleted.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The provided index is invalid.
+
+    * 3a1. EstateContacts shows an error message.
+
+  Use case resumes at step 2.
+
+
+**Use case: Find contractor contacts**
+
+**MSS**
+
+1. User requests to find contractor contacts by name or service.
+2. User provides search keyword(s).
+3. EstateContacts filters contractor contacts matching the query.
+4. EstateContacts displays matching contractor contacts.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. No contractor contacts match the query.
+
+    * 3a1. EstateContacts informs the user that no matching contractors were found.
+
+  Use case ends.
+
+* 2a. The query format is invalid.
+
+    * 2a1. EstateContacts shows an error message with the correct format.
+
+  Use case resumes at step 1.
+
+
+**Use case: Add a maintenance task**
+
+**MSS**
+
+1. User requests to add a maintenance task with facility, date, and contractor index.
+2. EstateContacts validates the contractor index against the contractor list.
+3. EstateContacts creates the maintenance task and links contractor details.
+4. EstateContacts adds the task to the maintenance task list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The contractor index is invalid.
+
+    * 2a1. EstateContacts shows an error message.
+
+  Use case resumes at step 1.
+
+* 3a. A duplicate maintenance task already exists.
+
+    * 3a1. EstateContacts shows an error message.
+
+  Use case ends.
+
+* 1a. Task input format is invalid.
+
+    * 1a1. EstateContacts shows an error message with the correct format.
+
+  Use case resumes at step 1.
+
+
+**Use case: Edit a maintenance task**
+
+**MSS**
+
+1. User requests to edit a maintenance task.
+2. EstateContacts displays maintenance tasks with indices.
+3. User provides task index and fields to update.
+4. EstateContacts validates the update request.
+5. EstateContacts updates the task details.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The task index is invalid.
+
+    * 3a1. EstateContacts shows an error message.
+
+  Use case resumes at step 2.
+
+* 4a. One or more updated fields are invalid.
+
+    * 4a1. EstateContacts shows an error message.
+
+  Use case resumes at step 3.
+
+
+**Use case: Delete a maintenance task**
+
+**MSS**
+
+1. User requests to list maintenance tasks.
+2. EstateContacts displays maintenance tasks with indices.
+3. User requests to delete a task by index.
+4. EstateContacts deletes the selected maintenance task.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The task index is invalid.
+
+    * 3a1. EstateContacts shows an error message.
+
+  Use case resumes at step 2.
+
+* 4a. The selected task is already marked as done.
+
+    * 4a1. EstateContacts rejects the deletion and shows an error message.
+
+  Use case ends.
+
+
+**Use case: Mark a maintenance task as done**
+
+**MSS**
+
+1. User requests to mark a maintenance task as done.
+2. EstateContacts validates the task index.
+3. EstateContacts updates the task status to done.
+4. EstateContacts displays the updated task list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The task index is invalid.
+
+    * 2a1. EstateContacts shows an error message.
+
+  Use case resumes at step 1.
+
+* 3a. The task is already marked as done.
+
+    * 3a1. EstateContacts shows an error message.
+
+  Use case ends.
+
+
+**Use case: View maintenance history by facility**
+
+**MSS**
+
+1. User requests maintenance history for a specific facility.
+2. EstateContacts retrieves matching maintenance task records for that facility.
+3. EstateContacts displays the maintenance history.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. No maintenance history exists for the specified facility.
+
+    * 2a1. EstateContacts shows an error message.
+
+  Use case ends.
+
+* 1a. Facility input format is invalid.
+
+    * 1a1. EstateContacts shows an error message with the correct format.
+
+  Use case resumes at step 1.
+
+
+**Use case: Generate a monthly maintenance report**
+
+**MSS**
+
+1. User requests a report for a given month.
+2. EstateContacts validates the month input.
+3. EstateContacts retrieves completed maintenance tasks for that month.
+4. EstateContacts generates and displays the monthly report.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The month input is invalid.
+
+    * 2a1. EstateContacts shows an error message with the correct format.
+
+  Use case resumes at step 1.
+
+* 3a. No completed maintenance tasks are found for the selected month.
+
+    * 3a1. EstateContacts informs the user that no completed tasks were found.
 
   Use case ends.
 
 
 ### Non-Functional Requirements
 
-1. The system should work on any mainstream OS with Java 17 installed.
-2. The system should be able to store at least 1000 contacts without noticeable performance degradation.
-3. The system should respond to user commands within 1 second under normal usage conditions.
+1. The application should work on Windows 10/11, macOS 12+, and Ubuntu 20.04+ with Java 17 installed.
+2. The application should be optimized for keyboard-first usage; all core features should be executable via CLI commands without requiring mouse interaction.
+3. For a dataset of up to 1,000 contractor contacts and 2,000 maintenance tasks, typical commands (`addc`, `findc`, `listt`, `donet`, `report`) should complete within 1 second on a mainstream personal computer.
+4. The application should start up and show the main window within 5 seconds under normal conditions.
+5. The application should persist data locally and remain fully usable without an Internet connection.
+6. The system should save all committed changes to local storage and recover them correctly after application restart.
+7. The system should handle invalid user inputs gracefully by showing clear error messages without crashing.
+8. User data files should be stored in a human-readable format (JSON) so that advanced users can inspect or back up data manually if needed.
 
 
 ### Glossary
