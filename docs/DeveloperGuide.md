@@ -366,7 +366,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to add a new contact.
 2. EstateContacts prompts for the contact details.
-3. User provides the contractor's name, phone number, email, and address.
+3. User provides the contractor's details.
 4. EstateContacts adds the contact to the system.
 
    Use case ends.
@@ -375,28 +375,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The provided contact details are invalid.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts identifies the invalid field(s) and displays the expected format.
 
   Use case resumes at step 2.
-
-
-**Use case: List maintenance tasks**
-
-**MSS**
-
-1. User requests to view maintenance tasks.
-2. EstateContacts retrieves all stored maintenance tasks.
-3. EstateContacts displays the list of maintenance tasks.
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. There are no maintenance tasks found.
-
-    * 2a1. EstateContacts informs the user that no tasks exist.
-
-  Use case ends.
 
 
 **Use case: List contractor contacts**
@@ -434,7 +415,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The provided index is invalid.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts informs the user that the index must be a positive integer within the displayed contractor list range.
 
   Use case resumes at step 2.
 
@@ -452,17 +433,51 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
+* 2a. The provided query format is invalid.
+
+    * 2a1. EstateContacts informs the user that at least one supported prefix is required.
+
+  Use case resumes at step 1.
+
 * 3a. No contractor contacts match the query.
 
     * 3a1. EstateContacts informs the user that no matching contractors were found.
 
   Use case ends.
 
-* 2a. The query format is invalid.
 
-    * 2a1. EstateContacts shows an error message with the correct format.
+**Use case: Edit a contractor contact**
 
-  Use case resumes at step 1.
+**MSS**
+
+1. User requests to list all contractor contacts.
+2. EstateContacts displays contractor contacts with indices.
+3. User requests to edit a contractor contact by providing an index and updated field values.
+4. EstateContacts validates the index and updated fields.
+5. EstateContacts updates the contractor contact.
+6. EstateContacts displays the updated contractor details.
+
+   Use case ends.
+
+**Extensions**
+
+* 3a. The provided index is invalid.
+
+    * 3a1. EstateContacts informs the user that the index must be a positive integer within the displayed contractor contact list range.
+
+  Use case resumes at step 2.
+
+* 3b. One or more updated fields are invalid.
+
+    * 3b1. EstateContacts identifies the invalid field(s) and displays the expected format.
+
+  Use case resumes at step 3.
+
+* 3c. No fields are provided for update.
+
+    * 3c1. EstateContacts informs the user that at least one editable field must be provided.
+
+  Use case resumes at step 3.
 
 
 **Use case: Add a maintenance task**
@@ -478,48 +493,74 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
+* 1a. Task input format is invalid.
+
+    * 1a1. EstateContacts identifies the invalid field and displays the expected format.
+
+  Use case resumes at step 1.
+
 * 2a. The contractor index is invalid.
 
-    * 2a1. EstateContacts shows an error message.
+    * 2a1. EstateContacts informs the user that contractor index must reference an existing contractor index from the current contractor list.
 
   Use case resumes at step 1.
 
 * 3a. A duplicate maintenance task already exists.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts informs the user that a task with the same facility and date already exists for that contractor, and the task is not added.
 
   Use case ends.
 
-* 1a. Task input format is invalid.
 
-    * 1a1. EstateContacts shows an error message with the correct format.
+**Use case: List maintenance tasks**
 
-  Use case resumes at step 1.
+**MSS**
+
+1. User requests to view maintenance tasks.
+2. EstateContacts retrieves all stored maintenance tasks.
+3. EstateContacts displays the list of maintenance tasks.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. There are no maintenance tasks found.
+
+    * 2a1. EstateContacts informs the user that no tasks exist.
+
+  Use case ends.
 
 
 **Use case: Edit a maintenance task**
 
 **MSS**
 
-1. User requests to edit a maintenance task.
+1. User requests to list all maintenance tasks.
 2. EstateContacts displays maintenance tasks with indices.
-3. User provides task index and fields to update.
-4. EstateContacts validates the update request.
-5. EstateContacts updates the task details.
+3. User requests to edit a maintenance task by providing an index and updated field values.
+4. EstateContacts validates the index and updated fields.
+5. EstateContacts updates the maintenance task.
+6. EstateContacts displays the updated task details.
 
    Use case ends.
 
 **Extensions**
 
-* 3a. The task index is invalid.
+* 3a. The provided index is invalid.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts informs the user that the index must be a positive integer within the displayed maintenance task list range.
 
   Use case resumes at step 2.
 
-* 4a. One or more updated fields are invalid.
+* 3b. One or more updated fields are invalid.
 
-    * 4a1. EstateContacts shows an error message.
+    * 3b1. EstateContacts identifies the invalid field(s) and displays the expected format.
+
+  Use case resumes at step 3.
+
+* 3c. No fields are provided for update.
+
+    * 3c1. EstateContacts informs the user that at least one editable field must be provided.
 
   Use case resumes at step 3.
 
@@ -539,13 +580,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The task index is invalid.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts informs the user that the index must be a positive integer within the displayed maintenance task list range.
 
   Use case resumes at step 2.
 
 * 4a. The selected task is already marked as done.
 
-    * 4a1. EstateContacts rejects the deletion and shows an error message.
+    * 4a1. EstateContacts rejects the deletion and informs the user that completed tasks cannot be deleted.
 
   Use case ends.
 
@@ -565,13 +606,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The task index is invalid.
 
-    * 2a1. EstateContacts shows an error message.
+    * 2a1. EstateContacts informs the user that the index must be a positive integer within the displayed maintenance task list range.
 
   Use case resumes at step 1.
 
 * 3a. The task is already marked as done.
 
-    * 3a1. EstateContacts shows an error message.
+    * 3a1. EstateContacts informs the user that the selected task is already in `DONE` status.
 
   Use case ends.
 
@@ -588,17 +629,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. No maintenance history exists for the specified facility.
-
-    * 2a1. EstateContacts shows an error message.
-
-  Use case ends.
-
 * 1a. Facility input format is invalid.
 
-    * 1a1. EstateContacts shows an error message with the correct format.
+    * 1a1. EstateContacts informs the user that the facility prefix is required and displays the expected format.
 
   Use case resumes at step 1.
+
+* 2a. No maintenance history exists for the specified facility.
+
+    * 2a1. EstateContacts informs the user that no maintenance records were found for the specified facility name.
+
+  Use case ends.
 
 
 **Use case: Generate a monthly maintenance report**
@@ -616,7 +657,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The month input is invalid.
 
-    * 2a1. EstateContacts shows an error message with the correct format.
+    * 2a1. EstateContacts informs the user that month must follow `YYYY-MM` format and displays the expected format.
 
   Use case resumes at step 1.
 
