@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FACILITY;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -68,7 +67,6 @@ public class AddtCommand extends Command {
         validateContractorExists(model);
         validateNoDuplicate(model);
 
-        List<Person> allPersons = model.getAddressBook().getPersonList();
         Person contractor = model.getFilteredPersonList().get(contractorIndex.getZeroBased());
         Set<Tag> contractorTags = contractor.getTags();
         Service contractorService = contractor.getService();
