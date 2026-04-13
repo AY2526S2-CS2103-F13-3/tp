@@ -79,7 +79,7 @@ Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
-Contractor field constraints:
+**Field constraints:**
 * `NAME`: Must contain only alphanumeric characters and spaces, and must not be blank.
 * `PHONE_NUMBER`: Must contain only digits, with length between 3 and 15 digits.
 * `EMAIL`: Must be in the format `local-part@domain`.
@@ -118,20 +118,27 @@ Format: `listc`
 
 ### Locating contractors by name or service : `findc`
 
-Finds contractors whose names (n/) or service (s/) contain any of the given keywords.
+Finds contractors whose names or services contain any of the given keywords.
 
-Format: `findc n/KEYWORD [MORE_KEYWORDS] or findc s/KEYWORD [MORE_KEYWORDS]`
+Format: `findc n/KEYWORD [MORE_KEYWORDS]…​` or `findc s/KEYWORD [MORE_KEYWORDS]…​`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only **exact** words will be matched e.g. `Han` will not match `Hans`
-* Contractors matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+**Field constraints:**
+* Exactly one search prefix must be provided: either `n/` (search by name) or `s/` (search by service). Using both prefixes in one command is not allowed.
+* At least one keyword must be provided after the prefix.
 
-**Caution:**
-* `findc` filters the contractor list, so contractor indices will change based on the current displayed list.
-* Always use the index shown in the **currently displayed list** when running `addt`, `delc`, or `editc`.
-* For example, if `listc` shows Rachel Ng at index 5, but `findc n/Rachel` shows her at index 1, use `c/1` to refer to her after `findc`.
+**Search behaviour:**
+* The search is case-insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only **full words** are matched. e.g. `Han` will not match `Hans`.
+* Contractors matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+
+<box type="warning" seamless>
+
+**Caution:** `findc` filters the contractor list, so contractor indices change based on the currently displayed list. Always use the index shown in the **currently displayed list** when running commands that reference a contractor index (e.g. `addt c/INDEX`, `delc INDEX`, `editc INDEX`).
+
+For example, if `listc` shows Rachel Ng at index 5, but `findc n/Rachel` shows her at index 1, use `c/1` to refer to her after `findc`.
+
+</box>
 
 
 Examples:
@@ -146,9 +153,8 @@ Deletes the specified contractor from EstateContacts.
 
 Format: `delc INDEX`
 
-* Deletes the contractor at the specified `INDEX`.
-* The index refers to the index number shown in the displayed contractor list.
-* The index **must be a positive integer** 1, 2, 3
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the currently displayed contractor list.
 
 <box type="warning" seamless>
 
@@ -166,19 +172,23 @@ Examples:
 
 Edits the details of the contractor identified by the index number shown in the displayed contractor list.
 
-Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]...`
+Format: `editc INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SERVICE] [t/TAG]…​`
 
-* Existing values will be overwritten by the input values.
-* At least one field must be provided.
-* The index refers to the index number shown in the displayed contractor list.
-* The index **must be a positive integer** 1, 2, 3
-* Any edited contractor field must satisfy the same field constraints listed under `addc`.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the currently displayed contractor list.
+* At least one optional field must be provided.
+* All edited fields must satisfy the same field constraints listed under `addc`.
+
+<box type="warning" seamless>
 
 **Caution:**
-* Inputting `t/` will clear all exisiting tags of the contractor.
-* The duplicate contractor rule from `addc` also applies to edits. You cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
+* Providing `t/` without a tag value will clear **all** existing tags of the contractor.
+* The duplicate contractor rule from `addc` also applies to edits — you cannot edit a contractor to a `NAME`, `PHONE_NUMBER`, or `EMAIL` that duplicates another existing contractor.
+* After a successful `editc`, the contractor list resets to show **all** contractors (any active `findc` filter is cleared).
 
-Example:
+</box>
+
+Examples:
 * `editc 1 p/91234567 e/johndoe@example.com`
 
 ### Maintenance task features
@@ -191,20 +201,25 @@ Adds a maintenance task and assigns it to a contractor in EstateContacts.
 
 Format: `addt f/FACILITY d/DATE c/CONTRACTOR_INDEX`
 
-Task field constraints:
-* `FACILITY`: Must be between 1 and 50 characters (after trimming).
-* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and must be a valid date in YYYY-MM-DD format.
-* `CONTRACTOR_INDEX`: Must be a positive integer and must refer to an entry in the **currently displayed contractor list**.
+**Field constraints:**
+* `FACILITY`: Must be between 1 and 50 characters (after trimming leading/trailing spaces).
+* `DATE`: Must be in `YYYY-MM-DD` format and must be a valid calendar date (e.g. `2026-02-30` is invalid).
+* `CONTRACTOR_INDEX`: Must be a positive integer referring to the index shown in the **currently displayed contractor list**.
+
+<box type="warning" seamless>
+
+**Caution:** A task cannot be added if another task for the same facility on the same date already exists.
+
+</box>
 
 
 <box type="tip" seamless>
 
-**Tip 1 :** A task cannot be added if another task for the same facility on the same date already exists.
-**Tip 2:** You are allowed to add tasks with dates in the past (e.g., to retroactively log completed maintenance work). When doing so, the application will successfully add the task but will display a warning message indicating that the task is scheduled in the past.
+**Tip:** You are allowed to add tasks with dates in the past (e.g. to retroactively log completed maintenance work). The task will be added successfully, but a warning message will be shown indicating that the task is scheduled in the past.
 </box>
 
 Examples:
-* `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the full list.
+* `listc` followed by `addt f/Sports Hall d/2026-12-01 c/2` adds a task for Sports Hall on 1 Dec 2026 assigned to the 2nd contractor in the displayed list.
 * `listc` followed by `addt f/Function Room d/2026-06-20 c/4` adds a task for Function Room on 20 Jun 2026 assigned to the 4th contractor.
 
 ### Listing all tasks : `listt`
@@ -219,16 +234,25 @@ Edits the specified task from EstateContacts.
 
 Format: `editt INDEX [f/FACILITY] [d/DATE] [c/CONTRACTOR_INDEX]`
 
-* Existing values will be overwritten by the input values.
-* At least one field must be provided.
-* The index refers to the index number shown in the displayed maintenance task list.
-* The index **must be a positive integer** 1, 2, 3
-* Any edited task field must satisfy the same field constraints listed under `addt`.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
+* At least one optional field must be provided.
+* `FACILITY`: Must be between 1 and 50 characters (after trimming leading/trailing spaces).
+* `DATE`: Must be in `YYYY-MM-DD` format, must be a valid calendar date, and **must not be a date in the past**.
+* `CONTRACTOR_INDEX`: Must be a positive integer referring to the index shown in the **currently displayed contractor list**.
 
-**Caution:**: Refer to `addt` caution section.
+<box type="warning" seamless>
+
+**Caution:**
+* Completed tasks (marked via `donet`) **cannot** be edited. Toggle the task back to pending using `donet INDEX` before editing.
+* A task cannot be edited to have the same facility and date as another existing task.
+* Unlike `addt`, past dates are **not** allowed when editing a task's date.
+* Changing the contractor (`c/CONTRACTOR_INDEX`) will update the task's stored contractor name, service, and tags to match the new contractor at the time of the edit. If that contractor is later modified or deleted, the task retains the snapshot taken at edit time.
+
+</box>
 
 Examples:
-* `editt 1 f/FunctionRoom d/2026-12-15`
+* `editt 1 f/Function Room d/2026-12-15`
 
 ### Deleting a task : `delt`
 
@@ -236,12 +260,17 @@ Deletes the specified task from EstateContacts.
 
 Format: `delt INDEX`
 
-* Deletes the task at the specified `INDEX`.
-* The index refers to the index number shown in the displayed maintenance task list.
-* Completed tasks (marked via `donet`) **cannot** be deleted, as they are kept for monthly reporting purposes.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
+
+<box type="warning" seamless>
+
+**Caution:** Completed tasks (marked via `donet`) **cannot** be deleted, as they are preserved for monthly reporting purposes. To delete a completed task, first toggle it back to pending using `donet INDEX`, then run `delt INDEX`.
+
+</box>
 
 Examples:
-* delt 1
+* `delt 1`
 
 ### Sorting tasks by date : `sortt`
 
@@ -252,17 +281,15 @@ Format: `sortt`
 
 ### Marking a task as complete : `donet`
 
-Marks the specified maintenance task as completed.
+Toggles the completion status of the specified maintenance task. Running `donet` on a pending task marks it as completed; running it again on a completed task reverts it to pending.
 
 Format: `donet INDEX`
 
-* Marks the task at the specified `INDEX` as done.
-* The index refers to the index number shown in the displayed maintenance task list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* Running `donet` on a completed task will revert it to pending.
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the displayed maintenance task list.
 
 Examples:
-* `listt` followed by `donet 1` marks the 1st task in the task list as completed.
+* `listt` followed by `donet 1` marks the 1st task as completed. Running `donet 1` again reverts it to pending.
 
 ### Viewing maintenance history for a facility : `history`
 
@@ -270,13 +297,9 @@ Shows a list of all maintenance tasks associated with a specific facility.
 
 Format: `history f/FACILITY_NAME`
 
-* Lists all tasks for the specified facility.
-* If no tasks are found, a message will indicate that no maintenance history exists for that facility.
-
-Constraints:
-* The match is case-insensitive. e.g. `history f/sports hall` will match `Sports Hall`.
-* Only exact facility names will be matched. e.g. `history f/Sports` will not match `Sports Hall`.
-* `FACILITY_NAME` cannot be empty.
+**Field constraints:**
+* `FACILITY_NAME`: Must not be empty.
+* The match is case-insensitive (e.g. `history f/sports hall` will match `Sports Hall`), but the full facility name must match exactly — partial names are not matched (e.g. `history f/Sports` will **not** match `Sports Hall`).
 
 Examples:
 * `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
@@ -288,9 +311,12 @@ Generates a summary report of all completed maintenance tasks for the specified 
 
 Format: `report m/YEAR-MONTH`
 
-* `YEAR-MONTH` must be in the format `YYYY-MM` e.g. `2026-12`.
-* Only completed tasks (marked via `donet`) are included in the report.
-* Tasks are grouped by contractor, showing their name, service, tags and task count.
+**Field constraints:**
+* `YEAR-MONTH`: Must be in the format `YYYY-MM` with a valid month between `01` and `12` (e.g. `2026-12`).
+
+**Report content:**
+* Only completed tasks (marked via `donet`) are included.
+* Tasks are grouped by contractor, showing their name, service, tags, and task count.
 
 Examples:
 * `report m/2026-12` generates a report for December 2026.
@@ -302,11 +328,17 @@ Examples:
 
 ### Viewing help : `help or F1 keyboard shortcut`
 
-Shows a message explaining how to access the help page.
+Shows a message explaining how to access the help page. You can also press the `F1` key as a shortcut to open the help window.
 
 Format: `help`
 
 <img src="images/helpCommand.png" width="400" height="511" />
+
+<box type="warning" seamless>
+
+**Caution:** If the Help Window has been minimised and `help` is run (or `F1` is pressed), the original Help Window will remain minimised and no new window will appear. Manually restore the minimised Help Window to view it.
+
+</box>
 
 
 ### Clearing all entries : `clear confirm`
@@ -314,6 +346,12 @@ Format: `help`
 Permanently clears all contractor entries and pending maintenance tasks from EstateContacts. Completed tasks (`[DONE]`) are preserved for monthly reporting purposes.
 
 Format: `clear confirm`
+
+<box type="warning" seamless>
+
+**Caution:** This action is irreversible. All contractors and pending tasks will be permanently deleted. Typing `clear` without the `confirm` keyword will display a warning prompt instead of clearing any data — you must type `clear confirm` in full to proceed.
+
+</box>
 
 ### Exiting the program : `exit`
 
@@ -362,6 +400,9 @@ Furthermore, certain edits can cause EstateContacts to behave in unexpected ways
 
 **Q**: Why can't I delete some tasks using `delt`?<br>
 **A**: Completed tasks (`[DONE]`) cannot be deleted. Toggle the task back to pending using `donet INDEX`, then run `delt INDEX`.
+
+**Q**: Why can't I edit some tasks using `editt`?<br>
+**A**: Completed tasks (`[DONE]`) cannot be edited. Toggle the task back to pending using `donet INDEX`, then run `editt INDEX`.
 
 --------------------------------------------------------------------------------------------------------------------
 
