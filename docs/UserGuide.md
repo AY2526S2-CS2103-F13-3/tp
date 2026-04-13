@@ -80,7 +80,7 @@ Adds a contractor to EstateContacts.
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
 Contractor field constraints:
-* `NAME`: Must contain only alphanumeric characters and spaces, and must not be blank.
+* `NAME`: Must contain only alphanumeric characters, spaces and `./-`, and must not be blank.
 * `PHONE_NUMBER`: Must contain only digits, with length between 3 and 15 digits.
 * `EMAIL`: Must be in the format `local-part@domain`.
   * `local-part`: Must use alphanumeric characters and `+_.-`, cannot start/end with a special character.
