@@ -55,24 +55,24 @@ public class DonetCommand extends Command {
 
         MaintenanceTask taskToComplete = taskList.get(targetIndex.getZeroBased());
 
-        if (taskToComplete.isCompleted()) {
-            taskToComplete.unmarkAsCompleted();
-            return new CommandResult("Task reverted to pending: " + taskToComplete.getFacility());
-        }
-
-        taskToComplete.markAsCompleted();
-        logger.info("Task marked as completed: " + taskToComplete.getFacility());
-
-        // Build display string
-        String contractorNameStr = taskToComplete.getContractorName() != null
-            ? taskToComplete.getContractorName().fullName : "Unknown (deleted)";
         String tagsString = taskToComplete.getTags().stream()
                 .map(tag -> tag.tagName)
                 .collect(Collectors.joining(", "));
+        assert taskToComplete.getContractorName() != null : "Contractor name should not be null";
+        String contractorNameStr = taskToComplete.getContractorName().fullName;
         String taskDisplay = taskToComplete.getFacility() + " on " + taskToComplete.getDate()
                 + " (Contractor: " + contractorNameStr
                 + " | Service: " + taskToComplete.getContractorService()
                 + " | Tags: [" + tagsString + "])";
+
+        if (taskToComplete.isCompleted()) {
+            taskToComplete.unmarkAsCompleted();
+            logger.info("Task reverted to pending: " + taskToComplete.getFacility());
+            return new CommandResult("Task reverted to pending: " + taskDisplay);
+        }
+
+        taskToComplete.markAsCompleted();
+        logger.info("Task marked as completed: " + taskToComplete.getFacility());
         return new CommandResult(String.format(MESSAGE_SUCCESS, taskDisplay));
     }
 
