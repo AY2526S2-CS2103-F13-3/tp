@@ -79,7 +79,7 @@ Adds a contractor to EstateContacts.
 
 Format: `addc n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SERVICE [t/TAG]…`
 
-Contractor field constraints:
+**Field constraints:**
 * `NAME`: Must contain only alphanumeric characters and spaces, and must not be blank.
 * `PHONE_NUMBER`: Must contain only digits, with length between 3 and 15 digits.
 * `EMAIL`: Must be in the format `local-part@domain`.
@@ -153,9 +153,8 @@ Deletes the specified contractor from EstateContacts.
 
 Format: `delc INDEX`
 
-* Deletes the contractor at the specified `INDEX`.
-* The index refers to the index number shown in the displayed contractor list.
-* The index **must be a positive integer** 1, 2, 3
+**Field constraints:**
+* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the index shown in the currently displayed contractor list.
 
 <box type="warning" seamless>
 
@@ -297,13 +296,9 @@ Shows a list of all maintenance tasks associated with a specific facility.
 
 Format: `history f/FACILITY_NAME`
 
-* Lists all tasks for the specified facility.
-* If no tasks are found, a message will indicate that no maintenance history exists for that facility.
-
-Constraints:
-* The match is case-insensitive. e.g. `history f/sports hall` will match `Sports Hall`.
-* Only exact facility names will be matched. e.g. `history f/Sports` will not match `Sports Hall`.
-* `FACILITY_NAME` cannot be empty.
+**Field constraints:**
+* `FACILITY_NAME`: Must not be empty.
+* The match is case-insensitive (e.g. `history f/sports hall` will match `Sports Hall`), but the full facility name must match exactly — partial names are not matched (e.g. `history f/Sports` will **not** match `Sports Hall`).
 
 Examples:
 * `history f/Sports Hall` displays the maintenance history for the "Sports Hall".
@@ -315,9 +310,12 @@ Generates a summary report of all completed maintenance tasks for the specified 
 
 Format: `report m/YEAR-MONTH`
 
-* `YEAR-MONTH` must be in the format `YYYY-MM` e.g. `2026-12`.
-* Only completed tasks (marked via `donet`) are included in the report.
-* Tasks are grouped by contractor, showing their name, service, tags and task count.
+**Field constraints:**
+* `YEAR-MONTH`: Must be in the format `YYYY-MM` with a valid month between `01` and `12` (e.g. `2026-12`).
+
+**Report content:**
+* Only completed tasks (marked via `donet`) are included.
+* Tasks are grouped by contractor, showing their name, service, tags, and task count.
 
 Examples:
 * `report m/2026-12` generates a report for December 2026.
