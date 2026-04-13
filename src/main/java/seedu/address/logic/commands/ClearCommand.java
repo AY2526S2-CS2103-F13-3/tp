@@ -14,7 +14,7 @@ public class ClearCommand extends Command {
     public static final String CONFIRMATION_KEYWORD = "confirm";
     public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
     public static final String MESSAGE_CONFIRMATION_REQUIRED =
-            "WARNING: This will delete ALL contacts permanently!\n"
+            "WARNING: This will delete ALL contacts and tasks permanently!\n"
             + "To confirm, please type: clear confirm";
 
     private final boolean isConfirmed;
