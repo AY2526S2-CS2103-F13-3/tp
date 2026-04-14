@@ -42,7 +42,6 @@
       "headings": {
         "estatecontacts-developer-guide": "EstateContacts Developer Guide",
         "acknowledgements": "Acknowledgements",
-        "the-team-also-used-github-copilot-for-ide-assisted-autocomplete-during-development-google-gemini-used-by-tan-min-zhe-for-the-implementation-and-troubleshooting-of-the-historycommand-historycommandparser-classes-and-its-test-cases-claude-used-by-tan-yeong-teng-justin-for-implementation-and-troubleshooting-of-persistent-storage-in-maintenance-task-and-addt-command": "The team also used GitHub Copilot for IDE-assisted autocomplete during development.\nGoogle Gemini: Used by Tan Min Zhe for the implementation and troubleshooting of the HistoryCommand,  HistoryCommandParser classes and its test cases.\nClaude: Used by Tan Yeong Teng Justin for implementation and troubleshooting of persistent storage in maintenance task and addt command.",
         "setting-up-getting-started": "Setting up, getting started",
         "design": "Design",
         "architecture": "Architecture",
