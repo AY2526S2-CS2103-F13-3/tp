@@ -22,7 +22,7 @@ EstateContacts relies on the following third-party libraries/frameworks:
 * [JUnit 5](https://junit.org/junit5/) for automated testing.
 
 The team also used GitHub Copilot for IDE-assisted autocomplete during development.
-
+Gemini (AI tool): Used by Tan Min Zhe for the implementation and troubleshooting of the HistoryCommand,  HistoryCommandParser classes and its test cases.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
